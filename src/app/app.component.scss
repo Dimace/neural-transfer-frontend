@@ -1,0 +1,22 @@
+.upload-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-wrapper {
+    height: 300px;
+    width: 300px;
+    border: 2px solid blue;
+    border-radius: 10px;
+    display: flex;
+    margin: auto;
+
+    .image-block {
+        height: auto;
+        width: auto;
+    }
+
+    * {
+        margin: auto;
+    }
+}
