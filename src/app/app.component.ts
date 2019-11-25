@@ -21,18 +21,34 @@ export class AppComponent {
         'originalImage': null,
         'styleImage': null
     };
+    urlsToShow = {
+        'originalImage': null,
+        'styleImage': null
+    };
 
-    uploadResponse = { status: '', message: '', filePath: '' };
+    // uploadResponse = { status: '', message: '', filePath: '' };
     error = '';
 
     constructor(private formBuilder: FormBuilder, private uploadService: UploadService) {
     }
 
     onFileChange(event, inputName: string) {
+        console.log('on file change event', event.target.files[0]);
+        console.log('on file change input name', inputName);
         if (event.target.files.length > 0) {
             this.formFiles[inputName] = event.target.files[0];
-            // this.form.get(inputName).setValue(file);
-            // this.formFiles[inputName] = file;
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (event.target.files[0]) {
+                    this.urlsToShow[inputName] = reader.result;
+                }
+            };
+            reader.onabort = () => {
+                console.log('ABORT');
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+            this.urlsToShow[inputName] = null;
         }
     }
 
@@ -42,17 +58,21 @@ export class AppComponent {
         formData.append('originalImage', this.formFiles['originalImage']);
         formData.append('styleImage', this.formFiles['styleImage']);
 
-        this.uploadService.upload(formData, 'style-transfer').pipe(take(1)).subscribe(
+        this.uploadService.upload(formData, 'style-transfer').subscribe(
             (res) => {
-                console.log('SUCCESS');
-                this.uploadResponse = res;
+                console.log('SUCCESS res', res);
+                // this.uploadResponse = res;
                 this.imageName = res['imageName'];
-                this.imageIsLoaded = true;
+                // this.imageIsLoaded = true;
             },
             (err) => {
                 this.error = err;
                 this.imageName = '';
                 this.imageIsLoaded = true;
+            },
+            () => {
+                this.imageIsLoaded = true;
+                console.log('complete');
             }
         );
     }

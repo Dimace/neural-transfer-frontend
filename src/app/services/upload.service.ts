@@ -16,9 +16,10 @@ export class UploadService {
         const uploadURL = `${this.SERVER_URL}/${endpointUrl}`;
 
         return this.httpClient.post<any>(uploadURL, data, {
-            reportProgress: true,
-            observe: 'events'
-        }).pipe(map((event) => {
+            // reportProgress: true,
+            // observe: 'events'
+        });
+        /*.pipe(map((event) => {
 
                 switch (event.type) {
 
@@ -32,6 +33,6 @@ export class UploadService {
                         return `Unhandled event: ${event.type}`;
                 }
             })
-        );
+        );*/
     }
 }

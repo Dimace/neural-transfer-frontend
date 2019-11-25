@@ -1,20 +1,41 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <h1>NEURAL NET APPLICATION</h1>
 <section>
-    <div class="image-wrapper">
-        <img *ngIf="imageIsLoaded" src="{{imageName ? 'http://localhost:5000/' + imageName : ''}}" class="image-block">
-        <mat-spinner *ngIf="!imageIsLoaded"></mat-spinner>
+    <div class="block-with-title">
+        <h2>Resulting image</h2>
+        <div class="image-wrapper">
+            <img *ngIf="imageIsLoaded" src="{{imageName ? 'http://localhost:5000/' + imageName : ''}}" class="image-block">
+            <mat-spinner *ngIf="!imageIsLoaded"></mat-spinner>
+        </div>
+    </div>
+</section>
+<section *ngIf="urlsToShow.originalImage || urlsToShow.styleImage" class="image-row">
+    <div class="block-with-title">
+        <h2>ORIGINAL IMAGE</h2>
+        <div class="image-wrapper">
+            <img src="{{urlsToShow.originalImage}}" class="image-block">
+        </div>
+    </div>
+    <div class="large-plus-block">
+        <mat-icon>
+            add
+        </mat-icon>
+    </div>
+    <div class="block-with-title">
+        <h2>STYLE TO APPLY</h2>
+        <div class="image-wrapper">
+            <img src="{{urlsToShow.styleImage}}" class="image-block">
+        </div>
     </div>
 </section>
 <section>
     <form class="upload-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-        <input type="file" formControlName="originalImage" (change)="onFileChange($event,'originalImage')"/>
-        <input type="file" formControlName="styleImage" (change)="onFileChange($event, 'styleImage')"/>
+        <input type="file" accept=".jpg, .jpeg, .png" formControlName="originalImage" (change)="onFileChange($event,'originalImage')"/>
+        <input type="file" accept=".jpg, .jpeg, .png" formControlName="styleImage" (change)="onFileChange($event, 'styleImage')"/>
         <div>
             <button mat-flat-button [disabled]="!form.get('originalImage').value || !form.get('styleImage').value"
                     color="primary" type="submit">Upload</button>
         </div>
     </form>
 </section>
-
 <router-outlet></router-outlet>

@@ -14,9 +14,37 @@
     .image-block {
         height: auto;
         width: auto;
+        max-width: 100%;
+        max-height: 100%;
     }
 
     * {
         margin: auto;
+    }
+}
+
+
+.image-row {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.large-plus-block {
+    display: flex;
+    flex-direction: column;
+    // margin: auto;
+    justify-content: center;
+    mat-icon {
+        user-select: none;
+        font-size: 45px;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+.block-with-title {
+    & > * {
+        text-align: center;
     }
 }
